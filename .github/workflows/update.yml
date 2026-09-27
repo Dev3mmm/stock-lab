@@ -1,0 +1,51 @@
+name: Stock Lab daily rebalance
+on:
+  schedule:
+    - cron: "50 19 * * 2-6"   # 19:50 UTC = 15:50 ET during EDT (10 min before the 4pm close), Tue-Sat covers Mon-Fri US trading
+  workflow_dispatch:
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+concurrency:
+  group: pages
+  cancel-in-progress: false
+jobs:
+  trade:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: "20" }
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - name: place today's rebalance orders (ST07)
+        working-directory: paper_trader
+        env:
+          ALPACA_KEY: ${{ secrets.ALPACA_KEY }}
+          ALPACA_SECRET: ${{ secrets.ALPACA_SECRET }}
+        run: node trader.js
+      - name: snapshot account (for the equity curve)
+        working-directory: paper_trader
+        env:
+          ALPACA_KEY: ${{ secrets.ALPACA_KEY }}
+          ALPACA_SECRET: ${{ secrets.ALPACA_SECRET }}
+        run: node snapshot.js
+      - name: commit the updated journal/equity data
+        run: |
+          git config user.name "stock-lab-bot"; git config user.email "stock-lab-bot@users.noreply.github.com"
+          git add paper_trader/journal.jsonl paper_trader/equity.jsonl
+          git diff --cached --quiet || git commit -m "Daily rebalance data $(date -u +%F)"
+          git pull -q --rebase origin main && git push -q origin HEAD:main || true
+      - name: build dashboard
+        working-directory: paper_trader
+        run: python build_dashboard.py
+      - uses: actions/upload-pages-artifact@v3
+        with: { path: site }
+  deploy:
+    needs: trade
+    runs-on: ubuntu-latest
+    environment: { name: github-pages, url: ${{ steps.d.outputs.page_url }} }
+    steps:
+      - id: d
+        uses: actions/deploy-pages@v4

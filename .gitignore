@@ -1,0 +1,4 @@
+paper_trader/alpaca_keys.env
+paper_trader/runner.log
+**/__pycache__/
+site/

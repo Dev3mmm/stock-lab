@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Stock Lab</title>
+<style>
+:root{--bg:#0e1116;--card:#161b22;--line:#30363d;--fg:#c9d1d9;--mut:#8b949e;--up:#3fb950;--dn:#f85149;--blue:#58a6ff;--amber:#f0b90b}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+.wrap{max-width:1100px;margin:0 auto;padding:20px 16px}
+h1{font-size:24px;margin:0 0 2px}.mut{color:var(--mut);font-size:13px}
+a{color:var(--blue)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px;margin:16px 0}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-top:10px}
+.k{background:#0e1116;border:1px solid var(--line);border-radius:8px;padding:8px 10px}
+.k .l{color:var(--mut);font-size:11px;text-transform:uppercase;letter-spacing:.03em}
+.k .v{font-size:19px;font-weight:650;font-variant-numeric:tabular-nums}
+.up{color:var(--up)}.dn{color:var(--dn)}.mutc{color:var(--mut)}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{text-align:left;padding:6px 8px;border-bottom:1px solid #21262d;vertical-align:top}
+th{color:var(--mut);font-weight:500}
+.badge{display:inline-block;font-size:11px;padding:1px 8px;border-radius:99px;margin-left:4px}
+.badge.fail{background:#3a1717;color:var(--dn)}.badge.pass{background:#12341f;color:var(--up)}.badge.park{background:#3a2f10;color:var(--amber)}
+.sec{color:var(--mut);font-size:12px;text-transform:uppercase;letter-spacing:.04em;margin:14px 0 4px}
+canvas{width:100%;height:220px;display:block;background:#0e131b;border-radius:8px;border:1px solid var(--line);margin-top:10px}
+.day{border-top:1px solid #21262d;padding:10px 0}
+.day .hd{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;font-weight:600}
+.orders{margin-top:6px;font-size:13px;color:var(--mut)}
+.orders span{display:inline-block;background:#0e1116;border:1px solid var(--line);border-radius:6px;padding:2px 8px;margin:2px 4px 0 0}
+.orders span.buy{color:var(--up)}.orders span.sell{color:var(--dn)}
+.note{color:var(--mut);font-size:12px;margin-top:10px}
+.hubback{font-size:13px;margin-bottom:6px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hubback"><a href="https://dev3mmm.github.io/trading-hub/">&larr; Trading Hub</a></div>
+  <h1>Stock Lab <span class="mut" id="gen"></span></h1>
+  <div class="mut">Every idea is written as frozen rules before testing, backtested 2008-2026 against buy &amp; hold and random entries, and only then given a live paper account. Simulated results, not financial advice.</div>
+
+  <div class="card">
+    <h3 style="margin:0">Live paper account &mdash; ST07 RSI(2) overlay <span class="badge park">PARKED (backtest didn't clear the pass bar; running anyway to watch it live)</span></h3>
+    <div class="mut">13 names (10 large caps + SPY/QQQ/IWM), equal capital split, rebalanced once a day near the close. Weight = 1.0x above the 200-day average, 0.5x below it, 1.5x on a fresh RSI(2)&lt;10 dip while above the average. Alpaca paper account, started with $100,000 simulated cash &mdash; no real money.</div>
+    <div class="grid3" id="acctk"></div>
+    <canvas id="eqchart"></canvas>
+  </div>
+
+  <div class="card">
+    <h3 style="margin:0">Daily rebalance log</h3>
+    <div class="mut">What changed each day and why. A day with no lines below means the target position didn't change enough to trade.</div>
+    <div id="daylog"></div>
+  </div>
+
+  <div class="card">
+    <h3 style="margin:0">Backtest scoreboard</h3>
+    <div class="mut" id="sbnote"></div>
+    <div style="overflow:auto"><table id="sbtable"></table></div>
+    <div class="note">Full detail: <a href="https://github.com/Dev3mmm/stock-lab/blob/main/scoreboard.md">scoreboard.md</a> and <a href="https://github.com/Dev3mmm/stock-lab/blob/main/results/REPORT.md">results/REPORT.md</a> in the repo.</div>
+  </div>
+</div>
+<script>
+const DATA=__DATA__;
+document.getElementById("gen").textContent="· updated "+DATA.generated;
+const usd=v=>(v>=0?"+$":"-$")+Math.abs(Math.round(v)).toLocaleString();
+const cls=v=>v>0?"up":v<0?"dn":"mutc";
+
+function acctCard(){
+  const el=document.getElementById("acctk");
+  const eq=DATA.equity, last=eq[eq.length-1];
+  if(!last){ el.innerHTML='<div class="mutc">No account snapshot yet.</div>'; return; }
+  const start=eq[0].equity, pl=last.equity-start;
+  el.innerHTML=`
+    <div class="k"><div class="l">Equity</div><div class="v">$${Math.round(last.equity).toLocaleString()}</div></div>
+    <div class="k"><div class="l">P&amp;L since start</div><div class="v ${cls(pl)}">${usd(pl)}</div><div class="l">${(100*pl/start).toFixed(2)}%</div></div>
+    <div class="k"><div class="l">Cash</div><div class="v">$${Math.round(last.cash).toLocaleString()}</div></div>
+    <div class="k"><div class="l">Positions</div><div class="v">${last.positions.length}</div></div>`;
+}
+function eqChart(){
+  const cv=document.getElementById("eqchart"),eq=DATA.equity;
+  const dpr=window.devicePixelRatio||1,W=cv.clientWidth,H=cv.clientHeight;cv.width=W*dpr;cv.height=H*dpr;
+  const x=cv.getContext("2d");x.scale(dpr,dpr);x.clearRect(0,0,W,H);
+  if(eq.length<2){x.fillStyle="#8b949e";x.font="13px system-ui";x.fillText("Equity curve will appear once there are a few days of snapshots.",16,110);return}
+  const vals=eq.map(e=>e.equity);let lo=Math.min(...vals),hi=Math.max(...vals);const pad=(hi-lo)*0.1||10;lo-=pad;hi+=pad;
+  const L=60,R=14,T=10,B=22,pw=W-L-R,ph=H-T-B,n=eq.length;
+  const X=i=>L+i/(n-1)*pw,Y=v=>T+(hi-v)/(hi-lo)*ph;
+  x.strokeStyle="#21262d";x.fillStyle="#8b949e";x.font="11px system-ui";
+  for(let i=0;i<=4;i++){const v=lo+(hi-lo)*i/4,y=Y(v);x.beginPath();x.moveTo(L,y);x.lineTo(W-R,y);x.stroke();x.textAlign="right";x.fillText("$"+Math.round(v).toLocaleString(),L-6,y+4)}
+  x.strokeStyle="#58a6ff";x.lineWidth=2;x.beginPath();eq.forEach((e,i)=>{i?x.lineTo(X(i),Y(e.equity)):x.moveTo(X(i),Y(e.equity))});x.stroke();x.lineWidth=1;
+}
+function dayLog(){
+  const el=document.getElementById("daylog");
+  if(!DATA.days.length){el.innerHTML='<div class="mutc">No completed runs yet.</div>';return}
+  el.innerHTML=DATA.days.map(d=>{
+    const orders=d.orders.map(o=>`<span class="${o.side}">${o.side.toUpperCase()} ${o.sym} x${o.qty}</span>`).join("");
+    return `<div class="day"><div class="hd"><span>${d.date}${d.dry?' <span class="badge park">DRY RUN</span>':""}</span><span class="mutc">equity $${Math.round(d.equity).toLocaleString()} &middot; ${d.decisions.length} names checked</span></div>
+      <div class="orders">${orders||'<span class="mutc" style="border:none;padding:0">No changes traded</span>'}</div></div>`;
+  }).join("");
+}
+function sb(){
+  document.getElementById("sbnote").textContent=DATA.scoreboard_note;
+  const t=document.getElementById("sbtable");
+  let sec="";
+  t.innerHTML="<tr><th>Strategy</th><th>Market</th><th>Result</th><th>Verdict</th></tr>"+DATA.scoreboard.map(r=>{
+    const c=r.cells, verdict=c[c.length-1], head = c.slice(0,-1).join(" &middot; ");
+    let rowHtml="";
+    if(r.section!==sec){sec=r.section; rowHtml+=`<tr><td colspan="4" class="sec">${sec}</td></tr>`}
+    rowHtml+=`<tr><td>${c[0]}</td><td>${c[1]||""}</td><td class="mutc">${c.slice(2,-1).join(" &middot; ")}</td><td><span class="badge ${r.cls}">${verdict.replace(/\*\*/g,"")}</span></td></tr>`;
+    return rowHtml;
+  }).join("");
+}
+acctCard();eqChart();dayLog();sb();
+window.addEventListener("resize",eqChart);
+</script>
+</body>
+</html>

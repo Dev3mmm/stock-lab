@@ -1,0 +1,493 @@
+[00:00:01] Hey everyone, welcome back to the
+[00:00:01] channel. My name is Ray, and if you're
+[00:00:02] new here, I help you to make money and
+[00:00:04] run your business with AI. I worked at
+[00:00:06] Meta for over 6 years as a software
+[00:00:07] engineer and quit my job to help
+[00:00:08] everyone because I saw the huge impact
+[00:00:10] that AI had on the whole tech industry.
+[00:00:12] And because I want everyone to start
+[00:00:13] using AI, I'm giving away a $100 Claude
+[00:00:15] or ChatGPT max plan each video to every
+[00:00:18] single person watching. All you have to
+[00:00:20] do is like, subscribe, and comment below
+[00:00:22] on how you use AI in your daily life.
+[00:00:24] Thanks everyone for the support so I can
+[00:00:25] do so much more for the community. Also,
+[00:00:27] if you want to learn from me directly
+[00:00:28] with weekly meetings and a lot more
+[00:00:29] one-on-one help and direct support to
+[00:00:31] make money and build out your own
+[00:00:32] company with AI, feel free to check out
+[00:00:34] my school community. I linked it in the
+[00:00:35] comments below. In this video, I'm going
+[00:00:37] to be showing you how to build a trading
+[00:00:38] bot step-by-step from scratch using
+[00:00:40] Claude code and Alpaca. And the best
+[00:00:42] part is you don't even need to be
+[00:00:43] technical or have a technical background
+[00:00:45] at all because it's as simple as
+[00:00:46] speaking to Claude. In this video, I'm
+[00:00:48] going to walk through the exact tools
+[00:00:49] we'll be using to build our bot, how to
+[00:00:51] set them up so they communicate with
+[00:00:53] each other, and finally how to create a
+[00:00:54] trading bot with a specific beginner
+[00:00:56] strategy that automatically and
+[00:00:57] continuously checks the market for you.
+[00:00:59] Before we jump in, I want to give you
+[00:01:00] some actual context on what an AI
+[00:01:02] trading bot is and why I'm making one
+[00:01:03] for this video. Let's talk about what an
+[00:01:05] automated AI trading bot actually is. At
+[00:01:07] its core, a bot does two things. It
+[00:01:09] automates a repetitive strategy and it
+[00:01:12] executes better than human can. When I
+[00:01:13] started trading, I had the right ideas
+[00:01:15] and setups, but my problem was always
+[00:01:17] the execution. I'd spot a clean setup
+[00:01:19] and not be at my best to take it. I'd
+[00:01:21] get in a trade or forget to manage it
+[00:01:22] later on, or I'd manage it emotionally
+[00:01:25] and hand the profit right back. Every
+[00:01:26] single time it cost me a lot of money.
+[00:01:28] But, that's the real value of a bot. It
+[00:01:30] executes the strategy you've already
+[00:01:32] defined exactly the way that you find
+[00:01:34] it. It doesn't hesitate or forget or get
+[00:01:36] scared, and emotion is usually what
+[00:01:38] trips up most traders. A bot doesn't
+[00:01:40] have any emotions. It uses logic and
+[00:01:42] data and just executes the trade. Even
+[00:01:45] better is that your bot can work 24/7
+[00:01:47] around the clock even when you're
+[00:01:49] asleep. You don't have to worry about
+[00:01:50] missing out on a trade just because
+[00:01:51] you're not glued to a screen all day,
+[00:01:53] and that alone makes a bot worth it in
+[00:01:55] general. And if execution was ever your
+[00:01:57] weak point, and for most people it is, a
+[00:01:59] trading bot is how you fix it. But
+[00:02:01] before we start building, I just want to
+[00:02:02] give a quick disclaimer. I'm not a
+[00:02:04] financial advisor and this is not
+[00:02:05] financial advice. I'm just showing you a
+[00:02:07] cool use case with AI. Everything we're
+[00:02:09] doing today is specifically in paper
+[00:02:11] trading. Paper trading just means that
+[00:02:12] we're using fake money in a real market
+[00:02:14] so that we can test our bot and our
+[00:02:16] trading strategies using the same
+[00:02:17] stocks, the same prices, and have
+[00:02:19] everything be the same way as the real
+[00:02:21] market without taking any risk for real
+[00:02:23] money. When you're comfortable, you can
+[00:02:25] add real money to your account for real
+[00:02:26] instead of using paper trading. But
+[00:02:28] right now, we're going to dive into
+[00:02:30] building our trading bot with paper
+[00:02:32] trading. First, I'm going to search for
+[00:02:33] the Cloud desktop app. You might have
+[00:02:35] this already. And if you can, click on
+[00:02:37] this link here. If you need any links
+[00:02:38] and the tools, I'll have it in the
+[00:02:39] description below. I'm going here and
+[00:02:41] you see you just want to download the
+[00:02:42] app and you can use it for Windows or
+[00:02:44] Mac, but make sure you download the
+[00:02:46] Cloud desktop app. Okay, all right. So,
+[00:02:48] after you've installed the app, you'll
+[00:02:49] get something that looks like this. Make
+[00:02:51] sure your software or your Mac OS up to
+[00:02:53] date so you have everything available
+[00:02:54] and ideally you have the Pro or Max
+[00:02:56] version of the Cloud paid for. Once
+[00:02:58] again, I'm passing out a Max Cloud to
+[00:02:59] someone who likes, subscribes, and
+[00:03:00] comments below. So, make sure to do
+[00:03:02] that. Then go here and click on code.
+[00:03:04] We'll be working with Cloud code to
+[00:03:06] actually build out our bot. Next, we'll
+[00:03:07] create a folder for our trading bot. I'm
+[00:03:09] going to go over here by the chat and
+[00:03:10] click this folder icon. I already have
+[00:03:12] my projects folder that I keep all my
+[00:03:13] Cloud projects in. So, if you don't have
+[00:03:15] one, you can do that as well or create a
+[00:03:17] folder directly on your desktop. I'm
+[00:03:19] going to then create a new folder for my
+[00:03:21] projects and name it trading bot. Then
+[00:03:23] hit open. Now, above the chat, you see
+[00:03:25] that we're working out of the trading
+[00:03:26] bot folder. So, any new files that Cloud
+[00:03:28] creates will be in that folder. Okay, so
+[00:03:31] that's the first step. The next step is
+[00:03:32] we need to our brokerage account with
+[00:03:34] Alpaca. So, I'm going to go back to the
+[00:03:36] browser. I'm going to search Alpaca
+[00:03:37] trading platform. Go ahead and click on
+[00:03:39] Alpaca here and you'll sign up for a new
+[00:03:40] trading API and create a new account.
+[00:03:42] This takes a little bit, but once you
+[00:03:44] entered all your information, you should
+[00:03:45] see this dashboard. And in this
+[00:03:47] dashboard, if you go to the top left and
+[00:03:49] click on the account, you'll see that I
+[00:03:50] have an individual trading account. But,
+[00:03:53] everything we're going to be doing this
+[00:03:54] tutorial is not for real money. It's
+[00:03:55] with paper money. So, we're going to
+[00:03:57] need an actual paper trading account.
+[00:03:59] It's quite easy to set up. You can make
+[00:04:00] a new one if you want. I'm going to make
+[00:04:02] a new one to keep all things organized
+[00:04:04] in Cloud Paper Trading. And then you can
+[00:04:05] choose however much ever you want, a
+[00:04:07] million dollars, 200 million dollars,
+[00:04:09] but I'm just going to say $50,000 and
+[00:04:11] then click save. And you can see right
+[00:04:13] there, we're going to have a paper
+[00:04:14] trading account for about with $50,000
+[00:04:16] to essentially play with in the stock
+[00:04:18] market. All right, once you have your
+[00:04:19] account made, you'll need the account
+[00:04:21] API keys. You can find that over here,
+[00:04:23] but first we're going to go back to our
+[00:04:24] Cloud Desktop app. In the Cloud Desktop
+[00:04:26] app, you find your account at the bottom
+[00:04:28] left and click on it. Then click on
+[00:04:30] settings. Next, click on developer, and
+[00:04:33] this is where you'll connect the Alpaca
+[00:04:35] MCP to Cloud so that you can trade on
+[00:04:37] Alpaca through Cloud. Click on the edit
+[00:04:39] config. This window with your Cloud
+[00:04:41] config file will pop up with the Cloud
+[00:04:42] config file highlighted, and you just
+[00:04:44] click on the file to just open it. This
+[00:04:45] config file is where you'll copy and
+[00:04:47] paste the Alpaca MCP. Now, in order to
+[00:04:49] find the Alpaca MCP, we're going to go
+[00:04:51] back to our browser and search for
+[00:04:52] Alpaca Market MCP. Go ahead and click on
+[00:04:55] the link here and it'll take you to the
+[00:04:56] page where you can scroll down and find
+[00:04:57] the Cloud Desktop MCP option. Click on
+[00:05:00] install, and this will take you to the
+[00:05:01] GitHub page with the Alpaca MCP directly
+[00:05:05] ready to copy into your Cloud config
+[00:05:06] file.
+[00:05:07] I already have another MCP in my Cloud
+[00:05:09] config file, so I'm just going to add a
+[00:05:10] comment after the second to the last
+[00:05:12] squiggly bracket, and then click a new
+[00:05:14] line and over here copy from where it
+[00:05:16] says Alpaca to the second squiggly
+[00:05:18] bracket. This just adds the MCP to your
+[00:05:20] files. Then I'll paste it into a new
+[00:05:22] line on my config file. I'm going to try
+[00:05:24] here to match the spacing real quick. If
+[00:05:26] Cloud config file is completely empty,
+[00:05:28] you just copy and paste everything from
+[00:05:30] the code directly into your config file.
+[00:05:32] If you don't have any MCPs in your
+[00:05:34] config file, but you have some other
+[00:05:35] text in there, just copy and paste all
+[00:05:37] the code at the top of the Cloud config
+[00:05:39] file and add a comment after the last
+[00:05:40] squiggly bracket, or else you'll get an
+[00:05:42] error. Okay, once they're actually
+[00:05:44] pasted in there, you'll get your API
+[00:05:45] keys from Alpaca. We can go back to our
+[00:05:47] Alpaca account over here to get the API
+[00:05:49] keys and click generate new keys. You'll
+[00:05:51] get a regular key and a secret key, but
+[00:05:53] make sure to save that somewhere because
+[00:05:54] the secret key will disappear for a
+[00:05:55] while and you won't be able to see it.
+[00:05:57] Now, copy your key here, then open the
+[00:05:58] Cloud config file with your Alpaca MCP,
+[00:06:01] and then paste in the key inside the
+[00:06:02] quotes where it says to. Next, we'll do
+[00:06:04] the same for our secret key, and now
+[00:06:05] that that's done, we can close out of
+[00:06:07] our config file, and we'll also need to
+[00:06:08] close out of the Cloud desktop app
+[00:06:10] because the MCP can only update after we
+[00:06:13] restart the app. I'm going to reopen the
+[00:06:14] Cloud app now and then go back in there
+[00:06:16] to my account, then settings and
+[00:06:18] developer, and now you should see Alpaca
+[00:06:20] in your list of MCPs and that it's
+[00:06:22] running.
+[00:06:23] Okay, now let's check the connection
+[00:06:24] between Cloud and Alpaca. I'm going to
+[00:06:26] switch to code and then to a new session
+[00:06:28] to make sure I'm in the right trading
+[00:06:29] bot folder. Then I'm going to ask Cloud,
+[00:06:32] "I want to test a connection to my
+[00:06:33] Alpaca account. Can you tell me how much
+[00:06:35] money I have in my account and if I have
+[00:06:37] any stocks?"
+[00:06:38] Then hit enter. Also, we're working in
+[00:06:40] an older Cloud model right now because
+[00:06:42] these are simple tasks and we're going
+[00:06:43] to save on token usage.
+[00:06:45] Nice. Cloud told us that we have $50,000
+[00:06:48] in our account and no stocks, which is
+[00:06:50] correct. And also reminder, this is
+[00:06:52] $50,000 in fake paper trading money. Now
+[00:06:54] that our Alpaca account is actually
+[00:06:55] connected to Cloud, we can actually ask
+[00:06:57] Cloud to place a trade for us without
+[00:06:58] even going to Alpaca. Okay, awesome. We
+[00:07:00] see that Cloud says that I successfully
+[00:07:02] placed an order for Micron for us. Also,
+[00:07:04] since it is the weekend right now, the
+[00:07:05] market isn't open, so the order is
+[00:07:07] pending, but it will be filled when the
+[00:07:08] market opens. If we go over here to our
+[00:07:10] Alpaca account and refresh the page, we
+[00:07:12] can scroll down and we see that the
+[00:07:14] order shows up here and it is waiting
+[00:07:15] for the market order to be filled. You
+[00:07:17] can now prompt Cloud to just buy or sell
+[00:07:19] whatever stocks you like. However, the
+[00:07:21] whole point of this video is to create a
+[00:07:22] bot that automatically trades for you so
+[00:07:24] you don't have to worry about executing
+[00:07:25] trades yourself. In order to create this
+[00:07:27] automatic trading bot, we have to give
+[00:07:28] it a set of guidelines on when to buy,
+[00:07:30] sell, or hold, or else it won't know
+[00:07:32] when to execute.
+[00:07:34] To do this, we need to give our bot a
+[00:07:35] trading strategy. But there are tons of
+[00:07:37] different trading strategies out there.
+[00:07:39] You can use anyone you like, but for the
+[00:07:41] purposes of this video, I'm going to
+[00:07:42] give you the simplest one that actually
+[00:07:44] works. The strategy we're going to be
+[00:07:45] using is called the moving average
+[00:07:47] crossover. Let me explain what that
+[00:07:48] means. So, a moving average is just the
+[00:07:51] average price of a stock over a set
+[00:07:53] period of time.
+[00:07:54] A 50-day moving average is the average
+[00:07:56] closing price over the last 50 days. As
+[00:07:58] new prices come in, it actually updates
+[00:08:00] the average, and that's why it's called
+[00:08:01] moving. We're using the averages because
+[00:08:03] the averages smooth out all of the
+[00:08:04] noise, so you can actually see the
+[00:08:06] actual direction that the price is
+[00:08:07] trending for a stock. For our bot, we're
+[00:08:09] actually be using two moving averages. A
+[00:08:11] fast one, which is a 20-day average, and
+[00:08:12] a slow one, which is a 50-day average.
+[00:08:15] The fast one reacts pretty quickly to
+[00:08:16] recent price changes, which is why it's
+[00:08:18] called fast, and the slow one reacts
+[00:08:20] slower to price changes, hence the name.
+[00:08:22] So, this is how our two moving averages
+[00:08:23] are going to work together for our
+[00:08:24] strategy. When the fast line crosses
+[00:08:26] above the slow line, this means our
+[00:08:28] recent momentum is picking up and the
+[00:08:30] stock price is growing. That's actually
+[00:08:31] your buy signal. When the fast line
+[00:08:33] crosses above the slow line, this
+[00:08:35] actually means recent momentum is
+[00:08:36] turning up and the stock price is
+[00:08:38] growing, and that's your buy signal.
+[00:08:40] However, when the fast line crosses
+[00:08:41] below the slow line, momentum is turning
+[00:08:43] down, the stock is declining, and that's
+[00:08:45] your signal to get out. That's it.
+[00:08:47] That's the crossover. Cross up and
+[00:08:49] you're in, cross down and you're out.
+[00:08:51] And this is a great starting strategy
+[00:08:53] for your bot because it's just math.
+[00:08:55] There's no gut feeling, no guessing.
+[00:08:57] When two lines cross, an action happens,
+[00:08:59] and that's exactly the clear rule that
+[00:09:00] Claude can look for for 24/7 and act on
+[00:09:03] it the second it triggers. Like I
+[00:09:04] mentioned before, there are various
+[00:09:05] strategies you can use, and each one has
+[00:09:07] its pros and cons.
+[00:09:09] But in this case, the crossover strategy
+[00:09:10] shines when a stock is trending, but in
+[00:09:12] a choppy, sideways market, the lines
+[00:09:15] cross back and forth, and you'll rack up
+[00:09:16] a bunch of small losing trades. This is
+[00:09:18] just a reminder that no strategy wins
+[00:09:19] every time, and this one's no exception.
+[00:09:21] We're using it because it's simple and
+[00:09:23] clear, not because it's a magic way to
+[00:09:24] make money. And we're doing with paper
+[00:09:26] trading, so you can test out this
+[00:09:27] strategy as well as other strategies
+[00:09:29] before you want to use actual money.
+[00:09:30] Okay, now that we have a picked of our
+[00:09:31] strategy for our bot, it's as simple as
+[00:09:33] prompting Claude code.
+[00:09:35] I have this prompt here for my school
+[00:09:36] community that going to copy and paste
+[00:09:38] here, but I'll read it aloud for you so
+[00:09:40] you can follow along. I'm also going to
+[00:09:41] put it in the comments below. Build an
+[00:09:43] automated stock trading bot that uses a
+[00:09:44] moving average crossover. First, create
+[00:09:47] a config file where I can set the stock
+[00:09:49] symbol, moving average periods, and
+[00:09:50] trade size. We're using Apple with a
+[00:09:52] 20-day and 50-day moving average trading
+[00:09:54] at one share at a time.
+[00:09:57] The bot will fetch the last 100 days of
+[00:09:58] stock data using YFinance Yahoo Finance.
+[00:10:01] Then it calculates both the moving
+[00:10:03] averages and looks for a real crossover.
+[00:10:05] That means when the 20-day average
+[00:10:06] actually crosses above or below the
+[00:10:08] 50-day average between two consecutive
+[00:10:10] days. When that happens, it
+[00:10:12] automatically places a buy or sell order
+[00:10:14] in my paper trading account, also
+[00:10:15] creating an environment file for my API
+[00:10:17] credentials so I don't have to give my
+[00:10:18] account credentials every time I make a
+[00:10:20] trade. I'm going to change this to
+[00:10:21] actually use Opus 5 for building this
+[00:10:23] bot because it's a lot better for these
+[00:10:25] more complicated tasks, and now we just
+[00:10:27] hit enter and click allow on any pop-up
+[00:10:29] windows and wait for Claude to build it.
+[00:10:32] I usually actually just do bypass
+[00:10:33] permissions cuz it's a lot easier.
+[00:10:35] And then I'll show you what it looks
+[00:10:36] like. Also, Claude will most likely use
+[00:10:38] Python to build out your bot, so make
+[00:10:40] sure you have Python and Node.js already
+[00:10:42] downloaded and installed. Okay, so here
+[00:10:43] we see that Claude has actually built
+[00:10:45] our bot for us, and we created these
+[00:10:47] files in our trading bot folder for our
+[00:10:48] bot. Okay, I'm going to open my trading
+[00:10:50] bot folder and show you guys the files
+[00:10:51] in here.
+[00:10:52] Also, if you're using a Mac and you
+[00:10:54] don't see your .env file in your trading
+[00:10:55] bot folder, just hit command shift
+[00:10:58] period and you'll be able to see them
+[00:10:59] just like this. Okay, so the .env file
+[00:11:01] is actually where we'll be putting our
+[00:11:02] Alpaca account's API keys so that our
+[00:11:04] bot has credentials to access our paper
+[00:11:06] trading account without having it for us
+[00:11:07] to give that information every time. I'm
+[00:11:09] going to go back to my Alpaca account
+[00:11:10] for the keys. I'm going to copy the key
+[00:11:12] in from here and paste it into .env file
+[00:11:14] where it says to put your paper key
+[00:11:16] here. And like I said before, the secret
+[00:11:19] key disappeared from my Alpaca
+[00:11:20] dashboard, but it's not a big deal
+[00:11:21] because we can just grab it from our
+[00:11:23] Claude config file. All right, I'm going
+[00:11:24] to copy this and then paste it right
+[00:11:26] where it says paper secret key here and
+[00:11:28] then save file and then close out. Okay,
+[00:11:30] let's go back to our Claude code
+[00:11:31] session, and now I'm going to ask Claude
+[00:11:33] to run our bot. Type out, "Can you run
+[00:11:35] the bot?" Okay, and then hit enter.
+[00:11:37] Okay, looks like the dry run went well
+[00:11:39] and our bot is working just like it
+[00:11:40] should. Now that we have our bot built
+[00:11:42] with a strategy, what we want to do is
+[00:11:43] basically keep it alive and keep looping
+[00:11:46] and checking on a schedule automatically
+[00:11:47] for any buy or sell signals for our
+[00:11:49] stock. Without this step, we would
+[00:11:51] pretty much need to command manually to
+[00:11:53] run our bot every single time we want to
+[00:11:55] run a trade. And this would defeat the
+[00:11:57] whole purpose of having a trading bot so
+[00:11:58] you can step away from your computer and
+[00:12:00] not worry about up with the market and
+[00:12:02] executing trades for yourself. So, the
+[00:12:03] plan is to automate our bot so that it
+[00:12:05] checks our stock and in this case I
+[00:12:07] picked Apple, but you can choose any
+[00:12:09] stock you like from the many different
+[00:12:10] ones out there.
+[00:12:11] So, it checks Apple every single weekday
+[00:12:13] morning when the market opens at 9:30
+[00:12:15] EST. It runs our moving average
+[00:12:17] crossover strategy and then depending on
+[00:12:19] the output of the logic behind our
+[00:12:21] strategy, the bot will either buy, hold,
+[00:12:23] or sell signal and based off that
+[00:12:25] signal, the bot will execute the trade
+[00:12:26] accordingly and log it for you to review
+[00:12:28] in a file in your trading bot folder.
+[00:12:30] Okay, now I'm just going to copy this
+[00:12:31] prompt that I have from my school
+[00:12:33] community that I'm going to just paste
+[00:12:34] here.
+[00:12:35] But, I'll read it aloud so you can
+[00:12:37] follow along.
+[00:12:38] Also, I'm putting in the comments below
+[00:12:40] and once again, if you need help, please
+[00:12:41] join the school community. Automate my
+[00:12:43] bot so it runs Monday through Friday at
+[00:12:44] 9:30 EST, right when the stock market
+[00:12:46] opens. The bot will fetch the latest
+[00:12:48] market data, check for moving average
+[00:12:50] crossovers, and execute trades if it
+[00:12:52] finds a signal. The bot will log
+[00:12:54] everything it does each morning so I can
+[00:12:55] check the results whenever I want.
+[00:12:57] Now hit enter and wait for the Claude to
+[00:12:59] finish building out the automation and
+[00:13:01] hit allow for any pop-up windows. I
+[00:13:03] usually do bypass all permissions. I'll
+[00:13:05] show you what it looks like when it's
+[00:13:06] finally done. Okay, nice. Claude has
+[00:13:08] finished automating our bot so now it'll
+[00:13:10] run a check every morning when the
+[00:13:11] market opens and depending on our
+[00:13:13] signal, our bot will actually buy, hold,
+[00:13:16] or sell one share of Apple. Also, your
+[00:13:18] computer should stay on so your bot can
+[00:13:19] run every single morning and do its job.
+[00:13:21] And that's pretty much it. If you
+[00:13:22] haven't built anything with Claude yet
+[00:13:24] or been wanting to try and haven't tried
+[00:13:25] it, I highly recommend giving this one a
+[00:13:27] shot. Building a trading bot sounds more
+[00:13:29] daunting than it actually is. The
+[00:13:30] hardest part is actually just setting
+[00:13:31] everything up, but once you do, you saw
+[00:13:33] in this video how simple it is to just
+[00:13:35] have a conversation with Claude to build
+[00:13:37] out the bot and automate it. If you like
+[00:13:38] this video and want to learn more about
+[00:13:39] how to set up or use Claude, how to
+[00:13:41] create agents, how to set up your
+[00:13:42] projects, how to make money with YouTube
+[00:13:44] automations, and more, just subscribe
+[00:13:47] because I'm going to be putting a lot of
+[00:13:48] videos out there to help you get the
+[00:13:49] most out of Claude, ChatGPT, and AI in
+[00:13:51] general. If you want any help or want to
+[00:13:53] see me dive deeper in any of these
+[00:13:54] strategies, once again, join my
+[00:13:56] community where I do live Q&As and
+[00:13:58] one-on-one help and I help you build and
+[00:13:59] make money with AI. This is in my school
+[00:14:01] community in the comments below. Make
+[00:14:02] sure to like and subscribe for more and
+[00:14:04] comment below for any videos that you
+[00:14:06] want me to make. See you all in the next
+[00:14:07] video and thanks for watching.
